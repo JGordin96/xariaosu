@@ -1,5 +1,9 @@
+<script type="text/javascript">
+    $(function () {
+        $("[rel='tooltip']").tooltip();
+    });
+</script>
 <div class="container mt-5">
-    {{-- @dump($info) --}}
     <div class="card">
         <div class="card-body" >
             <div class="imgs-overlay">
@@ -11,17 +15,20 @@
                             <ul class="list-group list-group-flush" id="bio">
                                 <li class="list-group-item">
                                     {{ $info['username'] }} 
-                                    <i class="fa fa-circle text-secondary @if($info['is_online']) text-success @endif" aria-hidden="true"></i> 
-                                    <span class="fi fi-{{strtolower($info['country_code'])}} "></span>
+                                    <i rel="tooltip" title="{{$info['is_online'] ? 'online' : 'offline'}}" class="fa fa-circle text-secondary @if($info['is_online']) text-success @endif" aria-hidden="true"></i> 
+                                    
+                                    <span class="fi fi-{{strtolower($info['country_code'])}}" rel="tooltip" title="{{ $info['country']['name'] }}"></span>
 
-                                    <span class="badge" style="background-color: pink;">   
-                                        @for ($x = 0; $x < $info['support_level']; $x++) 
-                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                        @endfor     
+                                    <span class="badge" style="background-color: pink;">
+                                        @if($info['support_level'])
+                                            @for ($x = 0; $x < $info['support_level']; $x++) 
+                                                <i class="fa fa-heart-o" aria-hidden="true" rel="tooltip" title="osu!supporter"></i>
+                                            @endfor  
+                                        @endif      
                                     </span>
                                     
                                     
-                                    <span class="badge" style="background-color: blueviolet">
+                                    <span class="badge" style="background-color: blueviolet" rel="tooltip" title="{{ $info['statistics']['level']['progress'] }}%">
                                         {{ $info['statistics']['level']['current'] }}
                                     </span>
                                 </li>
@@ -39,7 +46,11 @@
   
             <div class="card overlay-content">
                 <div class="">
-                    <h3 class="card-title ml-3 mt-3">Global Rank: #{{ end($info['rank_history']['data']) }}</h3>
+                    <span>
+                        <h3 class="card-title ml-3 mt-3 d-inline-block">Global Rank: #{{ $info['statistics']['global_rank'] }}</h3>
+                        <h3 class="card-title ml-3 mt-3 d-inline">Country Rank: #{{ $info['statistics']['country_rank'] }}</h3>
+                    </span>
+                    {{-- <h3 class  ="card-title ml-3 mt-3">Global Rank: #{{ $info['statistics']['global_rank'] }} Country Rank: #{{ $info['statistics']['country_rank'] }}</h3> --}}
                     <div class="card-body">
                         <div class="card">
                             <div class="row">
