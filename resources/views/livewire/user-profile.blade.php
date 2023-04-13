@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 
-                <img class="rounded overlay" src="{{ $info['avatar_url']}}" alt="Card image cap">
+                <img class="rounded overlay-pp img-thumbnail" src="{{ $info['avatar_url']}}" alt="Card image cap" width="100px;">
             </div>
   
             <div class="card overlay-content">

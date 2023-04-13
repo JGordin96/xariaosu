@@ -53,6 +53,13 @@
     .imgs-overlay{
         position: relative;
     }
+
+    .overlay-pp {
+        position: absolute;
+        top: 15rem;
+        left: 2rem;
+        z-index: 3;
+    }
     
     .overlay {
         position: absolute;
@@ -76,6 +83,7 @@
     .basic-info {
         position: absolute;
         top: 16rem;
+        left: 9.2rem;
         z-index: 3;
     }
 
