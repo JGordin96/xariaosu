@@ -33,8 +33,10 @@
                     </ul>
                 </div>
 
-                {{-- <livewire:score-breakdown :score="$score" :page='score'> --}}
+                <div class="card-body" x-show="show === 'breakdownscore'">
                     @livewire('score-breakdown', ['score' => $score, 'page' => 'score'])
+                </div>
+
 
                 <div class="card-body" x-show="show === 'pie'">
                     <canvas id="{{$i}}"></canvas>

@@ -53,16 +53,19 @@
             </div>
 
             
-            <div class=" overlay-content container" x-data="{show : 'rank'}">
+            <div class="overlay-content container" x-data="{show : 'rank'}">
 
                 <div class="row">
                     <div class="col-sm p-0">
-                        @livewire('score-breakdown', ['score' => $info, 'page' => 'profile'])
+
+                        <div class="rank-chart card" x-show="show === 'breakdownprofile'">
+                            @livewire('score-breakdown', ['score' => $info, 'page' => 'profile'])
+                        </div>
 
                         <div class="rank-chart card" x-show="show === 'rank'">
                             <span>
                                 <h3 class="card-title ml-3 mt-3 d-inline-block">Global Rank: #{{ $info['statistics']['global_rank'] }}</h3>
-                                <h3 class="card-title ml-3 mt-3 d-inline">Country Rank: #{{ $info['statistics']['country_rank'] }}</h3>
+                                <h3 class="card-title ml-2 mt-3 d-inline">Country Rank: #{{ $info['statistics']['country_rank'] }}</h3>
                             </span>
                            
                             <div class="card-body">

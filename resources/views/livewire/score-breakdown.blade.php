@@ -1,4 +1,4 @@
-<div class="card-body" x-show="show === 'breakdown{{$page}}'">
+
     <ul class="list-group list-group-flush text">
     <li class="list-group-item text-center h6 fw-bold">
         <img src="{{URL('/images/magik/hit300.png')}}" alt="" width="35px" class="d-inline">
@@ -17,4 +17,3 @@
         : {{ $score['statistics']['count_miss'] }}   
     </li>
     </ul>
-</div>
