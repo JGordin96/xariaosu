@@ -4,7 +4,7 @@
     });
 </script>
 <div class="container mt-5">
-    @dump($info)
+    {{-- @dump($info) --}}
     <div class="card">
         <div class="card-body" >
             <div class="imgs-overlay">
@@ -125,12 +125,78 @@
                             });
                             </script>
                         </div>
+
+                        {{-- todo make line chart a component --}}
+                        {{-- todo correct labels for play chart --}}
+                        <div class="rank-chart card" x-show="show === 'play'">
+                            <div class="card-body">
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div style="height: 110px; width: 400px; position:relative;">
+                                                <canvas id="playChart"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Total Plays: #{{ $info['statistics']['play_count'] }}</li>
+                                            </ul>  
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+        
+                            @php
+                                $playData = array();
+                                $playLabel = array();
+                                foreach($info['monthly_playcounts'] as $key=> $val){
+                                $playData[] = $val['count'];
+                                $playLabel = $val['start_date'];
+                                }
+                            @endphp
+            
+                            <script>
+                            var plays = document.getElementById('playChart');
+            
+                            new Chart(plays, {
+                                type: 'line',
+                                legend: {
+                                    display: false
+                                },
+                                data: {
+                                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
+                                    datasets: [{
+                                        label: 'Monthy Plays',
+                                        tension: 0.4,
+                                        pointRadius: 0.2,
+                                        data: {{json_encode($playData)}},
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            display:false
+           
+                                        },
+                                        x: {
+                                            display: false,
+                                        }
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        }
+                                    }
+                                }
+                            });
+                            </script>
+                        </div>
                     </div>
                     <div class="col-sm md-1 p-0">
                         <ul class="nav nav-tabs flex-column profile-nav" role="tablist">
-                            <li role="presentation" class="active"><button x-on:click="show = 'rank'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'rank' }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
+                            <li role="presentation" class="active"><button x-on:click="show = 'rank'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'rank' }"><i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;</button></li>
                             <li role="presentation"><button x-on:click="show = 'breakdownprofile'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'breakdownprofile' }">激</button></li>
-                            <li role="presentation" class="active"><button x-on:click="show = 'pie'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'pie' }"><i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
+                            <li role="presentation" class="active"><button x-on:click="show = 'play'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'play' }"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;</button></li>
                         </ul>
                     </div>
                 </div>
