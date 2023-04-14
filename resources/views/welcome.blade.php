@@ -91,4 +91,8 @@
         padding-right: 1.5rem;
         padding-bottom: 0.2rem;
     }
+
+    .profile-nav {
+        border-bottom: none;
+    }
 </style>

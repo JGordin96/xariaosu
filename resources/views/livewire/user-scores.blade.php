@@ -17,7 +17,7 @@
                 
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active px-1"><button x-on:click="show = 'info'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'info' }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
-                    <li role="presentation"><button x-on:click="show = 'breakdown'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'breakdown' }">激</button></li>
+                    <li role="presentation"><button x-on:click="show = 'breakdownscore'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'breakdownscore' }">激</button></li>
                     <li role="presentation" class="active px-1"><button x-on:click="show = 'pie'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'pie' }"><i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
                 </ul>
                 
@@ -33,26 +33,8 @@
                     </ul>
                 </div>
 
-                <div class="card-body" x-show="show === 'breakdown'">
-                    <ul class="list-group list-group-flush text">
-                    <li class="list-group-item text-center h6 fw-bold">
-                        <img src="{{URL('/images/magik/hit300.png')}}" alt="" width="35px" class="d-inline">
-                        : {{ $score['statistics']['count_300'] }}   
-                    </li>
-                    <li class="list-group-item text-center h6 fw-bold">
-                        <img src="{{URL('/images/magik/hit100.png')}}" alt="" width="35px" class="d-inline">
-                        : {{ $score['statistics']['count_100'] }}   
-                    </li>
-                    <li class="list-group-item text-center h6 fw-bold">
-                        <img src="{{URL('/images/magik/hit50.png')}}" alt="" width="35px" class="d-inline">
-                        : {{ $score['statistics']['count_50'] }}   
-                    </li>
-                    <li class="list-group-item text-center h6 fw-bold">
-                        <img src="{{URL('/images/magik/hit0.png')}}" alt="" width="35px" class="d-inline">
-                        : {{ $score['statistics']['count_miss'] }}   
-                    </li>
-                    </ul>
-                </div>
+                {{-- <livewire:score-breakdown :score="$score" :page='score'> --}}
+                    @livewire('score-breakdown', ['score' => $score, 'page' => 'score'])
 
                 <div class="card-body" x-show="show === 'pie'">
                     <canvas id="{{$i}}"></canvas>
