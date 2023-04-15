@@ -44,6 +44,7 @@
 
                 <div class="col-md-6 rounded">
                     @livewire('recent-scores')
+                    @livewire('most-played')
                 </div>
             </div>
         </div>

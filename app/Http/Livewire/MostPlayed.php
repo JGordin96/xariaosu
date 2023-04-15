@@ -2,23 +2,19 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use Illuminate\Support\Facades\Http;
+use Livewire\Component;
 
-class UserScores extends Component
-
+class MostPlayed extends Component
 {
-    public array $scores = [];
-
+    public array $mostPlayedMaps = [];
 
     public function mount()
     {
-        $this->scores = self::getTopScores(env('OSU_USER_ID', null));
+        $this->mostPlayedMaps = self::getMostPlayedMaps(env('OSU_USER_ID', null));
     }
-
-    public function getTopScores(string $id)
+    public function getMostPlayedMaps(string $id)
     {
-        // TODO: break data down-beatmapset to go in its own array
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
@@ -26,11 +22,11 @@ class UserScores extends Component
         $body = [
             'include_fails' => 0,
             'mode' => 'osu',
-            'limit' => 9,
+            'limit' => 5,
             'offset' => 1,
         ];
 
-        $response = Http::withToken(config('osu.access_token'))->get("https://osu.ppy.sh/api/v2/users/$id/scores/best", [
+        $response = Http::withToken(config('osu.access_token'))->get("https://osu.ppy.sh/api/v2/users/$id/beatmapsets/most_played", [
             'headers' => $headers,
             'body' => $body
         ]);
@@ -38,9 +34,8 @@ class UserScores extends Component
         return json_decode($response->getBody(), true);
 
     }
-
     public function render()
     {
-        return view('livewire.user-scores');
+        return view('livewire.most-played');
     }
 }
