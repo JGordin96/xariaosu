@@ -4,19 +4,13 @@
     });
 </script>
 <div class="container mt-5">
-    {{-- @dump($info) --}}
+{{--     @dump($info)--}}
     <div class="card">
         <div class="card-body" >
             <div class="imgs-overlay">
                 <div class="rounded">
                     {{-- todo: account for other img sizes --}}
                     <img  src="{{ $info['cover_url']}}" alt="Card image cap" class="rounded">
-
-                    {{-- <div class="card">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"></li>
-                        </ul>
-                    </div> --}}
 
                     <div class="card basic-info">
 
@@ -41,7 +35,7 @@
                                     </span>
                                 </li>
                                 <li class="list-group-item">
-                                    PP: {{ round($info['statistics']['pp']) }}
+                                    PP: {{ number_format(round($info['statistics']['pp'])) }}
                                     Accuracy: {{ number_format((float)$info['statistics']['hit_accuracy'], 2, '.', '') }}%
                                 </li>
                             </ul>
@@ -59,13 +53,35 @@
                     <div class="col-sm p-0">
 
                         <div class="rank-chart card" x-show="show === 'breakdownprofile'">
-                            @livewire('score-breakdown', ['score' => $info, 'page' => 'profile'])
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        @livewire('score-breakdown', ['score' => $info, 'page' => 'profile'])
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group list-group-flush text">
+                                            <li class="list-group-item text-center h6 pt-3 fw-bold">
+                                                Total Hits: {{ number_format($info['statistics']['total_hits']) }}
+                                            </li>
+                                            <li class="list-group-item text-center h6 fw-bold">
+                                                Max Combo: {{ number_format($info['statistics']['maximum_combo']) }}
+                                            </li>
+                                            <li class="list-group-item text-center h6 fw-bold">
+                                                Total Score: {{ number_format($info['statistics']['total_score']) }}
+                                            </li>
+                                            <li class="list-group-item text-center h6 fw-bold">
+                                                Ranked Score: {{ number_format($info['statistics']['ranked_score']) }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="rank-chart card" x-show="show === 'rank'">
                             <span>
-                                <h3 class="card-title ml-3 mt-3 d-inline-block">Global Rank: #{{ $info['statistics']['global_rank'] }}</h3>
-                                <h3 class="card-title ml-2 mt-3 d-inline">Country Rank: #{{ $info['statistics']['country_rank'] }}</h3>
+                                <h3 class="card-title ml-3 mt-3 d-inline-block">Global Rank: #{{ number_format($info['statistics']['global_rank']) }}</h3>
+                                <h3 class="card-title ml-2 mt-3 d-inline">Country Rank: #{{ number_format($info['statistics']['country_rank']) }}</h3>
                             </span>
 
                             <div class="card-body">
@@ -78,7 +94,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">Highest Global Rank: #{{ $info['rank_highest']['rank'] }}</li>
+                                                <li class="list-group-item">Highest Global Rank: #{{ number_format($info['rank_highest']['rank']) }}</li>
                                                 <li class="list-group-item">Achieved {{ \Carbon\Carbon::parse($info['rank_highest']['updated_at'])->diffForHumans() }}</li>
                                             </ul>
                                         </div>
@@ -128,7 +144,21 @@
 
                         {{-- todo make line chart a component --}}
                         {{-- todo correct labels for play chart --}}
+                        @php
+                            $playData = array();
+                            $playLabel = array();
+                            foreach($info['monthly_playcounts'] as $key=> $val){
+                            $playData[] = $val['count'];
+                            $playLabel[] = $val['start_date'];
+                            }
+                            $averagePlays = round(array_sum(array_values($playData)) / count($playData));
+                        @endphp
+
                         <div class="rank-chart card" x-show="show === 'play'">
+                            <span>
+                                <h3 class="card-title ml-3 mt-3 d-inline-block">Total Plays: {{ number_format($info['statistics']['play_count']) }}</h3>
+                                <h3 class="card-title ml-2 mt-3 d-inline">Average Monthly Plays: {{ number_format($averagePlays) }}</h3>
+                            </span>
                             <div class="card-body">
                                 <div class="card">
                                     <div class="row">
@@ -139,21 +169,15 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">Total Plays: #{{ $info['statistics']['play_count'] }}</li>
+                                                <li class="list-group-item">Play Time: {{ \Carbon\CarbonInterval::seconds($info['statistics']['play_time'])->cascade()->forHumans()}}</li>
+                                            </ul>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">This Months Plays: {{ number_format(end($info['monthly_playcounts'])['count']) }}</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            @php
-                                $playData = array();
-                                $playLabel = array();
-                                foreach($info['monthly_playcounts'] as $key=> $val){
-                                $playData[] = $val['count'];
-                                $playLabel = $val['start_date'];
-                                }
-                            @endphp
 
                             <script>
                             var plays = document.getElementById('playChart');

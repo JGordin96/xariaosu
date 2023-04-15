@@ -26,8 +26,15 @@
                 <div class="card-body" x-show="show === 'info'">
                     <ul class="list-group list-group-flush">
                         {{-- todo loop through mods as its an array --}}
-                        <li class="list-group-item">Score: {{ $score['score']}}</li>
-                        <li class="list-group-item">Mods: {{ $score['mods'][0] ?? 'None' }}</li>
+                        <li class="list-group-item">Score: {{ number_format($score['score']) }}</li>
+                        <li class="list-group-item">
+                            Mods:
+                            @if (!empty($score['mods']))
+                                @foreach($score['mods'] as $mod_i => $mod_info)
+                                    {{ $mod_info }}
+                                @endforeach
+                            @endif
+                        </li>
                         <li class="list-group-item">PP: {{ round($score['pp']) }}</li>
                         <li class="list-group-item">Accuracy: {{ round((float)$score['accuracy'] * 100 ) }}%</li>
                     </ul>
@@ -45,7 +52,7 @@
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                 <script>
-                var id = {!! json_encode($i) !!}
+                var id = {!! json_encode($i) !!};
                 var ctx = document.getElementById(id);
 
                 new Chart(ctx, {
