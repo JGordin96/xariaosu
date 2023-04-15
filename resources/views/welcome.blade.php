@@ -9,22 +9,22 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        
+
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         @livewireStyles
-        
+
         <!-- Scripts -->
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    
+
         <!-- Alpine Plugins -->
         <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-        
+
         <!-- Alpine Core -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
- 
+
         <script type="text/javascript" href="{{ asset('css/app.css') }}"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -32,8 +32,8 @@
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
     </head>
     <body class="antialiased">
-    
-       
+
+
         @livewireScripts
         <div class="container ">
             @livewire('user-profile')
@@ -56,18 +56,18 @@
 
     .overlay-pp {
         position: absolute;
-        top: 15rem;
+        top: 17rem;
         left: 2rem;
         z-index: 3;
     }
-    
+
     .overlay {
         position: absolute;
         top: 0;
         left: 0;
         z-index: 3;
     }
-    
+
     .overlay-content {
         position: absolute;
         opacity: 0.75;

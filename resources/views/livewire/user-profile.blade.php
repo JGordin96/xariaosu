@@ -6,7 +6,6 @@
     });
 </script>
 <div class="container mt-5">
-    @dump($info)
     <div class="card">
         <div class="card-body">
             <div class="imgs-overlay">
