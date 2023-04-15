@@ -14,22 +14,22 @@
                     <p class="card-text">Score achieved {{ \Carbon\Carbon::parse($score['created_at'])->diffForHumans() }}.</p>
                 </div>
 
-                
+
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active px-1"><button x-on:click="show = 'info'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'info' }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
                     <li role="presentation"><button x-on:click="show = 'breakdownscore'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'breakdownscore' }">激</button></li>
                     <li role="presentation" class="active px-1"><button x-on:click="show = 'pie'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'pie' }"><i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
                 </ul>
-                
 
-   
+
+
                 <div class="card-body" x-show="show === 'info'">
                     <ul class="list-group list-group-flush">
                         {{-- todo loop through mods as its an array --}}
                         <li class="list-group-item">Score: {{ $score['score']}}</li>
                         <li class="list-group-item">Mods: {{ $score['mods'][0] ?? 'None' }}</li>
-                        <li class="list-group-item">PP: {{ $score['pp'] }}</li>
-                        <li class="list-group-item">Accuracy: {{ $score['accuracy'] }}</li>
+                        <li class="list-group-item">PP: {{ round($score['pp']) }}</li>
+                        <li class="list-group-item">Accuracy: {{ round((float)$score['accuracy'] * 100 ) }}%</li>
                     </ul>
                 </div>
 
@@ -41,7 +41,7 @@
                 <div class="card-body" x-show="show === 'pie'">
                     <canvas id="{{$i}}"></canvas>
                 </div>
-                
+
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                 <script>
@@ -63,7 +63,7 @@
                     }
                 });
                 </script>
-                
+
             </div>
         </div>
         @endforeach

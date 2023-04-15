@@ -11,48 +11,48 @@
                 <div class="rounded">
                     {{-- todo: account for other img sizes --}}
                     <img  src="{{ $info['cover_url']}}" alt="Card image cap" class="rounded">
-                    
+
                     {{-- <div class="card">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"></li>
                         </ul>
                     </div> --}}
-                    
+
                     <div class="card basic-info">
 
                             <ul class="list-group list-group-flush" id="bio">
                                 <li class="list-group-item">
-                                    {{ $info['username'] }} 
-                                    <i rel="tooltip" title="{{$info['is_online'] ? 'online' : 'offline'}}" class="fa fa-circle text-secondary @if($info['is_online']) text-success @endif" aria-hidden="true"></i> 
-                                    
+                                    {{ $info['username'] }}
+                                    <i rel="tooltip" title="{{$info['is_online'] ? 'online' : 'offline'}}" class="fa fa-circle text-secondary @if($info['is_online']) text-success @endif" aria-hidden="true"></i>
+
                                     <span class="fi fi-{{strtolower($info['country_code'])}}" rel="tooltip" title="{{ $info['country']['name'] }}"></span>
 
                                     <span class="badge" style="background-color: pink;">
                                         @if($info['support_level'])
-                                            @for ($x = 0; $x < $info['support_level']; $x++) 
+                                            @for ($x = 0; $x < $info['support_level']; $x++)
                                                 <i class="fa fa-heart-o" aria-hidden="true" rel="tooltip" title="osu!supporter"></i>
-                                            @endfor  
-                                        @endif      
+                                            @endfor
+                                        @endif
                                     </span>
-                                    
-                                    
+
+
                                     <span class="badge" style="background-color: blueviolet" rel="tooltip" title="{{ $info['statistics']['level']['progress'] }}%">
                                         {{ $info['statistics']['level']['current'] }}
                                     </span>
                                 </li>
                                 <li class="list-group-item">
                                     PP: {{ round($info['statistics']['pp']) }}
-                                    Accuracy: {{ number_format((float)$info['statistics']['hit_accuracy'], 2, '.', '') }}
+                                    Accuracy: {{ number_format((float)$info['statistics']['hit_accuracy'], 2, '.', '') }}%
                                 </li>
                             </ul>
-                
+
                     </div>
                 </div>
-                
+
                 <img class="rounded overlay-pp img-thumbnail" src="{{ $info['avatar_url']}}" alt="Card image cap" width="100px;">
             </div>
 
-            
+
             <div class="overlay-content container" x-data="{show : 'rank'}">
 
                 <div class="row">
@@ -67,7 +67,7 @@
                                 <h3 class="card-title ml-3 mt-3 d-inline-block">Global Rank: #{{ $info['statistics']['global_rank'] }}</h3>
                                 <h3 class="card-title ml-2 mt-3 d-inline">Country Rank: #{{ $info['statistics']['country_rank'] }}</h3>
                             </span>
-                           
+
                             <div class="card-body">
                                 <div class="card">
                                     <div class="row">
@@ -80,17 +80,17 @@
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item">Highest Global Rank: #{{ $info['rank_highest']['rank'] }}</li>
                                                 <li class="list-group-item">Achieved {{ \Carbon\Carbon::parse($info['rank_highest']['updated_at'])->diffForHumans() }}</li>
-                                            </ul>  
+                                            </ul>
                                         </div>
-                                    </div>    
+                                    </div>
                                 </div>
                             </div>
-                            
+
                             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            
+
                             <script>
                             var rank = document.getElementById('rankChart');
-            
+
                             new Chart(rank, {
                                 type: 'line',
                                 legend: {
@@ -110,7 +110,7 @@
                                         y: {
                                             reverse: true,
                                             display:false
-           
+
                                         },
                                         x: {
                                             display: false,
@@ -140,12 +140,12 @@
                                         <div class="col-sm-6">
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item">Total Plays: #{{ $info['statistics']['play_count'] }}</li>
-                                            </ul>  
+                                            </ul>
                                         </div>
-                                    </div>    
+                                    </div>
                                 </div>
                             </div>
-        
+
                             @php
                                 $playData = array();
                                 $playLabel = array();
@@ -154,10 +154,10 @@
                                 $playLabel = $val['start_date'];
                                 }
                             @endphp
-            
+
                             <script>
                             var plays = document.getElementById('playChart');
-            
+
                             new Chart(plays, {
                                 type: 'line',
                                 legend: {
@@ -176,7 +176,7 @@
                                     scales: {
                                         y: {
                                             display:false
-           
+
                                         },
                                         x: {
                                             display: false,
@@ -200,8 +200,8 @@
                         </ul>
                     </div>
                 </div>
-            
-            </div>   
+
+            </div>
         </div>
     </div>
 </div>
