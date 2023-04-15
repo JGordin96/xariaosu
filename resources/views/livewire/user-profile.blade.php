@@ -1,49 +1,108 @@
+@php use Carbon\Carbon; @endphp
+@php use Carbon\CarbonInterval; @endphp
 <script type="text/javascript">
     $(function () {
         $("[rel='tooltip']").tooltip();
     });
 </script>
 <div class="container mt-5">
-{{--     @dump($info)--}}
+    @dump($info)
     <div class="card">
-        <div class="card-body" >
+        <div class="card-body">
             <div class="imgs-overlay">
                 <div class="rounded">
                     {{-- todo: account for other img sizes --}}
-                    <img  src="{{ $info['cover_url']}}" alt="Card image cap" class="rounded">
+                    <img src="{{ $info['cover_url']}}" alt="Card image cap" class="rounded">
 
                     <div class="card basic-info">
 
-                            <ul class="list-group list-group-flush" id="bio">
-                                <li class="list-group-item">
-                                    {{ $info['username'] }}
-                                    <i rel="tooltip" title="{{$info['is_online'] ? 'online' : 'offline'}}" class="fa fa-circle text-secondary @if($info['is_online']) text-success @endif" aria-hidden="true"></i>
+                        <ul class="list-group list-group-flush" id="bio">
+                            <li class="list-group-item">
+                                {{ $info['username'] }}
+                                <i rel="tooltip" title="{{$info['is_online'] ? 'online' : 'offline'}}"
+                                   class="fa fa-circle text-secondary @if($info['is_online']) text-success @endif"
+                                   aria-hidden="true"></i>
 
-                                    <span class="fi fi-{{strtolower($info['country_code'])}}" rel="tooltip" title="{{ $info['country']['name'] }}"></span>
+                                <span class="fi fi-{{strtolower($info['country_code'])}}" rel="tooltip"
+                                      title="{{ $info['country']['name'] }}"></span>
 
-                                    <span class="badge" style="background-color: pink;">
+                                <span class="badge" style="background-color: pink;">
                                         @if($info['support_level'])
-                                            @for ($x = 0; $x < $info['support_level']; $x++)
-                                                <i class="fa fa-heart-o" aria-hidden="true" rel="tooltip" title="osu!supporter"></i>
-                                            @endfor
-                                        @endif
+                                        @for ($x = 0; $x < $info['support_level']; $x++)
+                                            <i class="fa fa-heart-o" aria-hidden="true" rel="tooltip"
+                                               title="osu!supporter"></i>
+                                        @endfor
+                                    @endif
                                     </span>
 
 
-                                    <span class="badge" style="background-color: blueviolet" rel="tooltip" title="{{ $info['statistics']['level']['progress'] }}%">
+                                <span class="badge" style="background-color: blueviolet" rel="tooltip"
+                                      title="{{ $info['statistics']['level']['progress'] }}%">
                                         {{ $info['statistics']['level']['current'] }}
                                     </span>
-                                </li>
-                                <li class="list-group-item">
-                                    PP: {{ number_format(round($info['statistics']['pp'])) }}
-                                    Accuracy: {{ number_format((float)$info['statistics']['hit_accuracy'], 2, '.', '') }}%
-                                </li>
-                            </ul>
+                            </li>
+
+                            <li class="list-group-item align-content-center" style="padding-left: 2rem;">
+
+                                <span class="badge badge-primary text-light"
+                                      style="background-color: magenta"
+                                      rel="tooltip"
+                                      title="{{ $info['statistics']['grade_counts']['ssh'] }}"
+                                >
+                                    SS
+                                </span>
+
+                                <span class="badge badge-primary text-warning"
+                                      style="background-color: magenta"
+                                      rel="tooltip"
+                                      title="{{ $info['statistics']['grade_counts']['ss'] }}"
+                                >
+                                    SS
+                                </span>
+
+
+                                <span class="badge badge-primary bg-primary text-light"
+                                      rel="tooltip"
+                                      title="{{ $info['statistics']['grade_counts']['sh'] }}"
+                                >
+                                    S
+                                </span>
+
+
+                                <span class="badge badge-primary bg-primary text-warning"
+                                      rel="tooltip"
+                                      title="{{ $info['statistics']['grade_counts']['s'] }}"
+                                >
+                                    S
+                                </span>
+
+
+                                <span class="badge badge-primary text-light bg-success"
+                                      rel="tooltip"
+                                      title="{{ $info['statistics']['grade_counts']['a'] }}"
+                                >
+                                    A
+                                </span>
+
+                                <span class="badge badge-primary text-light bg-warning"
+                                      rel="tooltip"
+                                      title="{{ count($info['user_achievements']) }}"
+                                >
+                                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                                </span>
+                            </li>
+
+                            <li class="list-group-item">
+                                PP: {{ number_format(round($info['statistics']['pp'])) }}
+                                Accuracy: {{ number_format((float)$info['statistics']['hit_accuracy'], 2, '.', '') }}%
+                            </li>
+                        </ul>
 
                     </div>
                 </div>
 
-                <img class="rounded overlay-pp img-thumbnail" src="{{ $info['avatar_url']}}" alt="Card image cap" width="100px;">
+                <img class="rounded overlay-pp img-thumbnail" src="{{ $info['avatar_url']}}" alt="Card image cap"
+                     width="100px;">
             </div>
 
 
@@ -94,8 +153,10 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">Highest Global Rank: #{{ number_format($info['rank_highest']['rank']) }}</li>
-                                                <li class="list-group-item">Achieved {{ \Carbon\Carbon::parse($info['rank_highest']['updated_at'])->diffForHumans() }}</li>
+                                                <li class="list-group-item">Highest Global Rank:
+                                                    #{{ number_format($info['rank_highest']['rank']) }}</li>
+                                                <li class="list-group-item">
+                                                    Achieved {{ Carbon::parse($info['rank_highest']['updated_at'])->diffForHumans() }}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -105,40 +166,40 @@
                             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                             <script>
-                            var rank = document.getElementById('rankChart');
+                                var rank = document.getElementById('rankChart');
 
-                            new Chart(rank, {
-                                type: 'line',
-                                legend: {
-                                    display: false
-                                },
-                                data: {
-                                labels: {{json_encode($info['rank_history']['data'])}},
-                                    datasets: [{
-                                        label: 'Global Ranking',
-                                        tension: 0.4,
-                                        pointRadius: 0.2,
-                                        data: {{json_encode($info['rank_history']['data'])}},
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            reverse: true,
-                                            display:false
-
-                                        },
-                                        x: {
-                                            display: false,
-                                        }
+                                new Chart(rank, {
+                                    type: 'line',
+                                    legend: {
+                                        display: false
                                     },
-                                    plugins: {
-                                        legend: {
-                                            display: false
+                                    data: {
+                                        labels: {{json_encode($info['rank_history']['data'])}},
+                                        datasets: [{
+                                            label: 'Global Ranking',
+                                            tension: 0.4,
+                                            pointRadius: 0.2,
+                                            data: {{json_encode($info['rank_history']['data'])}},
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                reverse: true,
+                                                display: false
+
+                                            },
+                                            x: {
+                                                display: false,
+                                            }
+                                        },
+                                        plugins: {
+                                            legend: {
+                                                display: false
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
                             </script>
                         </div>
 
@@ -169,10 +230,12 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">Play Time: {{ \Carbon\CarbonInterval::seconds($info['statistics']['play_time'])->cascade()->forHumans()}}</li>
+                                                <li class="list-group-item">Play
+                                                    Time: {{ CarbonInterval::seconds($info['statistics']['play_time'])->cascade()->forHumans()}}</li>
                                             </ul>
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">This Months Plays: {{ number_format(end($info['monthly_playcounts'])['count']) }}</li>
+                                                <li class="list-group-item">This Months
+                                                    Plays: {{ number_format(end($info['monthly_playcounts'])['count']) }}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -180,47 +243,61 @@
                             </div>
 
                             <script>
-                            var plays = document.getElementById('playChart');
+                                var plays = document.getElementById('playChart');
 
-                            new Chart(plays, {
-                                type: 'line',
-                                legend: {
-                                    display: false
-                                },
-                                data: {
-                                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
-                                    datasets: [{
-                                        label: 'Monthy Plays',
-                                        tension: 0.4,
-                                        pointRadius: 0.2,
-                                        data: {{json_encode($playData)}},
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            display:false
-
-                                        },
-                                        x: {
-                                            display: false,
-                                        }
+                                new Chart(plays, {
+                                    type: 'line',
+                                    legend: {
+                                        display: false
                                     },
-                                    plugins: {
-                                        legend: {
-                                            display: false
+                                    data: {
+                                        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
+                                        datasets: [{
+                                            label: 'Monthy Plays',
+                                            tension: 0.4,
+                                            pointRadius: 0.2,
+                                            data: {{json_encode($playData)}},
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                display: false
+
+                                            },
+                                            x: {
+                                                display: false,
+                                            }
+                                        },
+                                        plugins: {
+                                            legend: {
+                                                display: false
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
                             </script>
                         </div>
                     </div>
                     <div class="col-sm md-1 p-0">
                         <ul class="nav nav-tabs flex-column profile-nav" role="tablist">
-                            <li role="presentation" class="active"><button x-on:click="show = 'rank'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'rank' }"><i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;</button></li>
-                            <li role="presentation"><button x-on:click="show = 'breakdownprofile'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'breakdownprofile' }">激</button></li>
-                            <li role="presentation" class="active"><button x-on:click="show = 'play'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'play' }"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;</button></li>
+                            <li role="presentation" class="active">
+                                <button x-on:click="show = 'rank'" class="nav-link border-primary"
+                                        x-bind:class="{ 'bg-primary text-light': show === 'rank' }"><i
+                                        class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;
+                                </button>
+                            </li>
+                            <li role="presentation">
+                                <button x-on:click="show = 'breakdownprofile'" class="nav-link border-primary"
+                                        x-bind:class="{ 'bg-primary text-light': show === 'breakdownprofile' }">激
+                                </button>
+                            </li>
+                            <li role="presentation" class="active">
+                                <button x-on:click="show = 'play'" class="nav-link border-primary"
+                                        x-bind:class="{ 'bg-primary text-light': show === 'play' }"><i
+                                        class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
