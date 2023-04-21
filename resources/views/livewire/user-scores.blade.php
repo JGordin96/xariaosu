@@ -6,9 +6,16 @@
         <div class="col-sm mb-5" :wire:key="{{ $i}}" x-data="{show : 'info'}">
             <div class="card" style="width: 18rem;">
                 <div id="imgs-overlay">
-                    <img class="rounded" src="{{ $score['beatmapset']['covers']['list@2x'] }}" alt="Card image cap">
+                    <img class="rounded" src="{{ $score['beatmapset']['covers']['list@2x'] }}" alt="Card image cap" wire:click="">
                     <img src="{{URL("/images/magik/ranking-{$score['rank']}.png")}}" alt="" class="opacity-75 overlay"/>
                 </div>
+
+                <div class="card-body">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://link.issou.best/oh92PV" allowfullscreen></iframe>
+                      </div>
+                </div>
+
                 <div class="card-body">
                     <h5 class="card-title">{{ $score['beatmapset']['title_unicode'] }} - {{ $score['beatmapset']['artist_unicode'] }}</h5>
                     <p class="card-text">Score achieved {{ \Carbon\Carbon::parse($score['created_at'])->diffForHumans() }}.</p>

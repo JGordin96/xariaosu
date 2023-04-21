@@ -16,6 +16,11 @@ class UserScores extends Component
         $this->scores = self::getTopScores(env('OSU_USER_ID', null));
     }
 
+    public function getReplay(string $id)
+    {
+         
+    }
+
     public function getTopScores(string $id)
     {
         // TODO: break data down-beatmapset to go in its own array
