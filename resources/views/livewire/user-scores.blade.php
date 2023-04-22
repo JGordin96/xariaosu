@@ -3,17 +3,12 @@
     <div class="row">
         @vite(['resources/js/app.js'])
         @foreach($scores as $i => $score)
+
         <div class="col-sm mb-5" :wire:key="{{ $i}}" x-data="{show : 'info'}">
             <div class="card" style="width: 18rem;">
                 <div id="imgs-overlay">
                     <img class="rounded" src="{{ $score['beatmapset']['covers']['list@2x'] }}" alt="Card image cap" wire:click="">
                     <img src="{{URL("/images/magik/ranking-{$score['rank']}.png")}}" alt="" class="opacity-75 overlay"/>
-                </div>
-
-                <div class="card-body">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://link.issou.best/oh92PV" allowfullscreen></iframe>
-                      </div>
                 </div>
 
                 <div class="card-body">
@@ -26,6 +21,7 @@
                     <li role="presentation" class="active px-1"><button x-on:click="show = 'info'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'info' }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
                     <li role="presentation"><button x-on:click="show = 'breakdownscore'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'breakdownscore' }">激</button></li>
                     <li role="presentation" class="active px-1"><button x-on:click="show = 'pie'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'pie' }"><i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
+                    <li role="presentation" class="active px-1"><button x-on:click="show = 'replay'" class="nav-link border-primary" x-bind:class="{ 'bg-primary text-light': show === 'replay' }"><i class="fa fa-video-camera fa-lg" aria-hidden="true"></i>&nbsp;</button></li>
                 </ul>
 
 
@@ -49,6 +45,19 @@
 
                 <div class="card-body" x-show="show === 'breakdownscore'">
                     @livewire('score-breakdown', ['score' => $score, 'page' => 'score'])
+                </div>
+
+                
+                <div class="card-body" x-show="show === 'replay'">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        
+                        {{-- @if($score['replay_url'] !== "")
+                            <iframe class="embed-responsive-item" src="{{ $score['replay_url'] }}" allowfullscreen></iframe>
+                        @else
+                            <p class="card-text">Not Uploaded!</p>
+                        @endif          --}}
+                    </div>
+                    {{-- @livewire('replays', ['mapId' => $score['beatmap']['beatmapset_id']]) --}}
                 </div>
 
 
