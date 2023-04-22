@@ -47,17 +47,11 @@
                     @livewire('score-breakdown', ['score' => $score, 'page' => 'score'])
                 </div>
 
-                
+
                 <div class="card-body" x-show="show === 'replay'">
                     <div class="embed-responsive embed-responsive-16by9">
-                        
-                        {{-- @if($score['replay_url'] !== "")
-                            <iframe class="embed-responsive-item" src="{{ $score['replay_url'] }}" allowfullscreen></iframe>
-                        @else
-                            <p class="card-text">Not Uploaded!</p>
-                        @endif          --}}
+                        <iframe class="embed-responsive-item" src="{{$score['replay_url']}}" allowfullscreen></iframe>
                     </div>
-                    {{-- @livewire('replays', ['mapId' => $score['beatmap']['beatmapset_id']]) --}}
                 </div>
 
 

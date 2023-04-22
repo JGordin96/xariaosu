@@ -19,6 +19,13 @@ class UserScores extends Component
         $this->scores = self::getTopScores(env('OSU_USER_ID', null));
         // $this->replays = self::getReplays(env('OSU_USER_ID', null));
         $this->replays = self::getReplays(env('OSU_USER_NAME', null));
+        $array = [];
+foreach ($this->scores as $i => &$score) {
+    $key = array_search($score['beatmapset']['id'], array_column($this->replays, 'mapID'));
+    $score['replay_url'] = $this->replays[$key]['videoUrl'];
+    $array[] = $score;
+}
+$this->scores = $array;
 
     }
 
@@ -31,18 +38,16 @@ class UserScores extends Component
 
 
         return json_decode($response->getBody(), true)['renders'];
-     
-        
+
+
     }
 
-    public function getRenderById($bm_id)
+    public function getRenderById()
     {
-        foreach ($this->replays['renders'] as $replay) {
-            if(!empty($replay['mapID']) && $replay['mapID'] === $bm_id) {
-                return $replay['videoUrl'];
-            } else {
-                return '';
-            }
+        foreach ($this->scores as $i => &$score) {
+            $key = array_search($score['beatmapset']['id'], array_column($this->replays, 'mapID'));
+            $score['replay_url'] = $this->replays[$key]['videoUrl'];
+            return $score;
         }
     }
 
@@ -68,7 +73,7 @@ class UserScores extends Component
         ]);
 
         return json_decode($response->getBody(), true);
-        
+
 
     }
 
