@@ -1,8 +1,9 @@
-<div class="container mt-5">
-    <div class="row">
+<h1>HERE</h1>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
         @vite(['resources/js/app.js'])
         @foreach($mostPlayedMaps as $map_i => $map)
-            <div class="col-lg mb-5" :wire:key="{{ $map_i}}">
+                <div @if ($loop->iteration === 1) class="carousel-item active" @else class="carousel-item" @endif :wire:key="{{ $map_i}}">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <img class="rounded img-thumbnail w-25 d-inline" src="{{ $map['beatmapset']['covers']['list@2x'] }}">
@@ -13,4 +14,12 @@
             </div>
         @endforeach
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
