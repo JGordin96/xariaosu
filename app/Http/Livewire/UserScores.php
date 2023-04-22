@@ -17,12 +17,9 @@ class UserScores extends Component
     public function mount()
     {
         $this->scores = self::getTopScores(env('OSU_USER_ID', null));
-        self::getReplays(env('OSU_USER_NAME', null));
+        // $this->replays = self::getReplays(env('OSU_USER_ID', null));
+        $this->replays = self::getReplays(env('OSU_USER_NAME', null));
 
-        foreach($this->scores as $score) {
-            self::getRenderById($score['beatmapset']['id']); 
-        }
-        dd($this->scores);
     }
 
     public function getReplays(string $user_name)
@@ -32,7 +29,10 @@ class UserScores extends Component
 
         $response = Http::get("https://apis.issou.best/ordr/renders?ordrUsername=$usr");
 
-        $this->replays = json_decode($response->getBody(), true);
+
+        return json_decode($response->getBody(), true)['renders'];
+     
+        
     }
 
     public function getRenderById($bm_id)
@@ -67,8 +67,8 @@ class UserScores extends Component
             'body' => $body
         ]);
 
-        $res = json_decode($response->getBody(), true);
-        dd($res);
+        return json_decode($response->getBody(), true);
+        
 
     }
 
