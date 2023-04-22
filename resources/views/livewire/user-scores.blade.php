@@ -3,7 +3,6 @@
     <div class="row">
         @vite(['resources/js/app.js'])
         @foreach($scores as $i => $score)
-
         <div class="col-sm mb-5" :wire:key="{{ $i}}" x-data="{show : 'info'}">
             <div class="card" style="width: 18rem;">
                 <div id="imgs-overlay">

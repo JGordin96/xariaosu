@@ -9,7 +9,6 @@ class UserScores extends Component
 
 {
     public array $scores = [];
-    public array $replayScores = [];
     public array $replays = [];
     public array $errors = [];
 
@@ -17,15 +16,16 @@ class UserScores extends Component
     public function mount()
     {
         $this->scores = self::getTopScores(env('OSU_USER_ID', null));
-        // $this->replays = self::getReplays(env('OSU_USER_ID', null));
+
         $this->replays = self::getReplays(env('OSU_USER_NAME', null));
-        $array = [];
-foreach ($this->scores as $i => &$score) {
-    $key = array_search($score['beatmapset']['id'], array_column($this->replays, 'mapID'));
-    $score['replay_url'] = $this->replays[$key]['videoUrl'];
-    $array[] = $score;
-}
-$this->scores = $array;
+
+        $scoresWithReplays = [];
+        foreach ($this->scores as $i => &$score) {
+            $key = array_search($score['beatmapset']['id'], array_column($this->replays, 'mapID'));
+            $score['replay_url'] = $this->replays[$key]['videoUrl'];
+            $scoresWithReplays[] = $score;
+        }
+        $this->scores = $scoresWithReplays;
 
     }
 
@@ -42,20 +42,9 @@ $this->scores = $array;
 
     }
 
-    public function getRenderById()
-    {
-        foreach ($this->scores as $i => &$score) {
-            $key = array_search($score['beatmapset']['id'], array_column($this->replays, 'mapID'));
-            $score['replay_url'] = $this->replays[$key]['videoUrl'];
-            return $score;
-        }
-    }
-
-
 
     public function getTopScores(string $id)
     {
-        // TODO: break data down-beatmapset to go in its own array
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
