@@ -42,11 +42,14 @@
                     @livewire('user-scores')
                 </div>
 
-                <div class="col-md-6 rounded">
+                <div class="col-md-3 rounded">
                     @livewire('recent-scores')
-                    @livewire('most-played')
-{{--                    @livewire('carousel')--}}
                 </div>
+
+                <div class="col-md-2 rounded">
+                    @livewire('most-played')
+                </div>
+
             </div>
         </div>
     </body>
