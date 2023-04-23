@@ -35,7 +35,7 @@
 
 
         @livewireScripts
-        <div class="container ">
+        <div class="container">
             @livewire('user-profile')
             <div class="row mt-5">
                 <div class="col-md-6 rounded">
