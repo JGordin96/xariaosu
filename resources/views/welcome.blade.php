@@ -30,27 +30,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+
+        <script type="text/javascript">
+            $(function () {
+                $("[rel='tooltip']").tooltip();
+            });
+        </script>
     </head>
     <body class="antialiased">
-
-
         @livewireScripts
         <div class="container">
-            @livewire('user-profile')
-            <div class="row mt-5">
-                <div class="col-md-6 rounded">
-                    @livewire('user-scores')
-                </div>
-
-                <div class="col-md-3 rounded">
-                    @livewire('recent-scores')
-                </div>
-
-                <div class="col-md-2 rounded">
-                    @livewire('most-played')
-                </div>
-
-            </div>
+            @livewire('skins')
         </div>
     </body>
 </html>

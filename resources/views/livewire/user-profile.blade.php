@@ -1,10 +1,5 @@
 @php use Carbon\Carbon; @endphp
 @php use Carbon\CarbonInterval; @endphp
-<script type="text/javascript">
-    $(function () {
-        $("[rel='tooltip']").tooltip();
-    });
-</script>
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">

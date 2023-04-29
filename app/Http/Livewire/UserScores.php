@@ -11,9 +11,10 @@ class UserScores extends Component
     public array $scores = [];
     public array $replays = [];
     public array $errors = [];
+    public string $skin;
 
 
-    public function mount()
+    public function mount($skin)
     {
         $this->scores = self::getTopScores(env('OSU_USER_ID', null));
 
@@ -26,6 +27,7 @@ class UserScores extends Component
             $scoresWithReplays[] = $score;
         }
         $this->scores = $scoresWithReplays;
+        $this->skin = $skin;
 
     }
 
