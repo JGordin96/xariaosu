@@ -7,7 +7,7 @@
             <div class="card" style="width: 18rem;">
                 <div id="imgs-overlay">
                     <img class="rounded" src="{{ $score['beatmapset']['covers']['list@2x'] }}" alt="Card image cap" wire:click="">
-                    <img src="{{URL("/images/$skin/ranking-{$score['rank']}.png")}}" alt="" class="opacity-75 overlay"/>
+                    <img src="{{URL("/images/magik/ranking-{$score['rank']}.png")}}" alt="" class="opacity-75 overlay"/>
                 </div>
 
                 <div class="card-body">

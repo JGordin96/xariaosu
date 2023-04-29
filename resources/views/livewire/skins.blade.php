@@ -40,22 +40,5 @@
             </div>
           </div>
     </div>
-
-
-    @livewire('user-profile')
-    <div class="row mt-5">
-        <div class="col-md-6 rounded">
-            @livewire('user-scores', ['skin' => $selectedSkin])
-        </div>
-
-        <div class="col-md-3 rounded">
-            @livewire('recent-scores')
-        </div>
-
-        <div class="col-md-2 rounded">
-            @livewire('most-played')
-        </div>
-
-    </div>
 </div>
 
